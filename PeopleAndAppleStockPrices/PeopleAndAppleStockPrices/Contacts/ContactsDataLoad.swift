@@ -33,3 +33,25 @@ struct Picture: Codable {
     let medium: String
 }
 
+extension UserData {
+    
+    static func getUsers() -> [UserInfo] {
+        var userInfo = [UserInfo]()
+        
+        guard let fileURL = Bundle.main.url(forResource: "userinfo", withExtension: "json") else {
+            fatalError("file not found")
+        }
+        
+        do {
+            let data = try Data.init(contentsOf: fileURL)
+            
+            let userData = try JSONDecoder().decode(UserData.self, from: data)
+            userInfo = userData.results
+        }
+        catch {
+            fatalError("error found - \(error)")
+        }
+        
+        return userInfo
+    }
+}
