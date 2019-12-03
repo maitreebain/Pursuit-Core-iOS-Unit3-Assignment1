@@ -29,7 +29,16 @@ class ContactsViewController: UIViewController {
     func loadData() {
         users = UserData.getUsers()
     }
-
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let contactsDetailController = segue.destination as? ContactsDetailController,
+            let indexPath = tableView.indexPathForSelectedRow else {
+                fatalError("no segue found")
+        }
+        let selectedContact = users[indexPath.row]
+        
+        contactsDetailController.user = selectedContact
+    }
 }
 
 extension ContactsViewController: UITableViewDataSource {
@@ -42,7 +51,7 @@ extension ContactsViewController: UITableViewDataSource {
         
         let contactSelected = users[indexPath.row]
         cell.textLabel?.text = "\(contactSelected.name.first.capitalized) \(contactSelected.name.last.capitalized)"
-        cell.detailTextLabel?.text = contactSelected.location.city
+        cell.detailTextLabel?.text = contactSelected.location.city.capitalized
         
         return cell
     }
