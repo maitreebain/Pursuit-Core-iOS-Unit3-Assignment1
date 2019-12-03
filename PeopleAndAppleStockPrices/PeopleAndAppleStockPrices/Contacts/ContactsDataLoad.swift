@@ -46,7 +46,9 @@ extension UserData {
             let data = try Data.init(contentsOf: fileURL)
             
             let userData = try JSONDecoder().decode(UserData.self, from: data)
-            userInfo = userData.results
+            userInfo = userData.results.sorted { $0.name.first < $1.name.first }
+            
+            
         }
         catch {
             fatalError("error found - \(error)")
@@ -54,4 +56,5 @@ extension UserData {
         
         return userInfo
     }
+    
 }
