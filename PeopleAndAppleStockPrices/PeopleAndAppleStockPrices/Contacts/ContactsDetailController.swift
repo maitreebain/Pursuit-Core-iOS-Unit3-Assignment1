@@ -22,8 +22,33 @@ class ContactsDetailController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+    
+        updateUI()
     }
     
+    func updateUI() {
+    
+    guard let userInfo = user else {
+        fatalError("no userinfo")
+    }
+        nameLabel.text = "\(userInfo.name.first) \(userInfo.name.last)".capitalized
+        emailLabel.text = "email: \(userInfo.email)"
+        cityLabel.text = "city: \(userInfo.location.city)".capitalized
 
-}
+        ImageClient.imageLoad(for: userInfo.picture.large) { [unowned self] (result) in
+                
+            switch result {
+            case .failure(let error):
+                print("error: \(error)")
+            case .success(let image):
+                DispatchQueue.main.async {
+                    self.contactImage.image = image
+                }
+            }
+                
+                
+            }
+        }
+    
+    
+    }

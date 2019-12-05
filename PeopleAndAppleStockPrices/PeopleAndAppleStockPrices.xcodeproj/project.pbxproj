@@ -18,6 +18,10 @@
 		8090D78F2396E7CC0029E202 /* ContactsDataLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090D78E2396E7CC0029E202 /* ContactsDataLoad.swift */; };
 		8090D7CE2397173D0029E202 /* ContactsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090D7CD2397173D0029E202 /* ContactsTests.swift */; };
 		8090D7DC239717920029E202 /* StocksTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8090D7DB239717920029E202 /* StocksTests.swift */; };
+		8093FE4923998EF400C6D5EA /* ImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8093FE4823998EF400C6D5EA /* ImageClient.swift */; };
+		8093FE4C23999AC000C6D5EA /* StocksDataLoad.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8093FE4B23999AC000C6D5EA /* StocksDataLoad.swift */; };
+		8093FE4E23999ACE00C6D5EA /* StocksViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8093FE4D23999ACE00C6D5EA /* StocksViewController.swift */; };
+		8093FE5023999AE600C6D5EA /* StocksDetailController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8093FE4F23999AE600C6D5EA /* StocksDetailController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +59,10 @@
 		8090D7D9239717920029E202 /* StocksTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StocksTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8090D7DB239717920029E202 /* StocksTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksTests.swift; sourceTree = "<group>"; };
 		8090D7DD239717920029E202 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8093FE4823998EF400C6D5EA /* ImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageClient.swift; sourceTree = "<group>"; };
+		8093FE4B23999AC000C6D5EA /* StocksDataLoad.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksDataLoad.swift; sourceTree = "<group>"; };
+		8093FE4D23999ACE00C6D5EA /* StocksViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksViewController.swift; sourceTree = "<group>"; };
+		8093FE4F23999AE600C6D5EA /* StocksDetailController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StocksDetailController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +114,7 @@
 			isa = PBXGroup;
 			children = (
 				577E5BEF21BA8BA10083EB97 /* Main.storyboard */,
+				8093FE4A23999AA600C6D5EA /* Stocks */,
 				8090D78B2396E4810029E202 /* Contacts */,
 				577E5BFD21BA8BE20083EB97 /* Supporting Files */,
 				577E5BF721BA8BA20083EB97 /* Info.plist */,
@@ -137,6 +146,7 @@
 			isa = PBXGroup;
 			children = (
 				8090D78E2396E7CC0029E202 /* ContactsDataLoad.swift */,
+				8093FE4823998EF400C6D5EA /* ImageClient.swift */,
 				577E5BED21BA8BA10083EB97 /* ContactsViewController.swift */,
 				8090D78C2396E4A80029E202 /* ContactsDetailController.swift */,
 			);
@@ -159,6 +169,16 @@
 				8090D7DD239717920029E202 /* Info.plist */,
 			);
 			path = StocksTests;
+			sourceTree = "<group>";
+		};
+		8093FE4A23999AA600C6D5EA /* Stocks */ = {
+			isa = PBXGroup;
+			children = (
+				8093FE4B23999AC000C6D5EA /* StocksDataLoad.swift */,
+				8093FE4D23999ACE00C6D5EA /* StocksViewController.swift */,
+				8093FE4F23999AE600C6D5EA /* StocksDetailController.swift */,
+			);
+			path = Stocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -294,9 +314,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8093FE4E23999ACE00C6D5EA /* StocksViewController.swift in Sources */,
 				8090D78D2396E4A80029E202 /* ContactsDetailController.swift in Sources */,
 				577E5BEE21BA8BA10083EB97 /* ContactsViewController.swift in Sources */,
+				8093FE4C23999AC000C6D5EA /* StocksDataLoad.swift in Sources */,
 				8090D78F2396E7CC0029E202 /* ContactsDataLoad.swift in Sources */,
+				8093FE5023999AE600C6D5EA /* StocksDetailController.swift in Sources */,
+				8093FE4923998EF400C6D5EA /* ImageClient.swift in Sources */,
 				577E5BEC21BA8BA10083EB97 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
