@@ -12,7 +12,13 @@ class StocksViewController: UIViewController {
 
     @IBOutlet weak var stocksTableView: UITableView!
     
-    var stocks = [StocksData]()
+    var stocks = [StocksData]() {
+        didSet {
+            stocksTableView.reloadData()
+        }
+    }
+    
+//    var sections = [[StocksData]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,6 +26,7 @@ class StocksViewController: UIViewController {
         stocksTableView.dataSource = self
 
         loadData()
+        sectionedStocks()
     }
 
     func loadData() {
@@ -39,13 +46,30 @@ class StocksViewController: UIViewController {
             arrayOfDates.append(dateInfo.joined(separator: " "))
         }
         
-        var sections = Array(repeating: [StocksData](), count: uniqueDates.count)
-        
-        
+        let dateName = Set(arrayOfDates.sorted())
+        let nameArray = Array(dateName).sorted()
+        var sections = Array(repeating: [StocksData](), count: dateName.count)
         
         var currentIndex = 0
+        var sectionIndex = 0
+        var currentSectionIndex = nameArray[sectionIndex]
         
+        var firstDate = stocksData.first?.date
         
+        for date in stocksData {
+            var stockDateName = date.date.components(separatedBy: "-")
+            stockDateName.removeLast()
+            let updatedDate = stockDateName.joined(separator: " ")
+            
+            if updatedDate == firstDate {
+                sections[currentIndex].append(date)
+            } else {
+                currentIndex += 1
+                sectionIndex += 1
+                currentSectionIndex = nameArray[sectionIndex]
+                sections[currentIndex].append(date)
+            }
+        }
         
     }
 }
