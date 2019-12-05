@@ -26,6 +26,28 @@ class StocksViewController: UIViewController {
         stocks = StocksData.stocksData()
     }
 
+    func sectionedStocks() {
+        let stocksData = StocksData.stocksData()
+
+        var arrayOfDates = [String]()
+        
+        let uniqueDates = Set(stocksData.map { $0.date})
+
+        for date in uniqueDates {
+            var dateInfo = date.components(separatedBy: "-")
+            dateInfo.removeLast()
+            arrayOfDates.append(dateInfo.joined(separator: " "))
+        }
+        
+        var sections = Array(repeating: [StocksData](), count: uniqueDates.count)
+        
+        
+        
+        var currentIndex = 0
+        
+        
+        
+    }
 }
 
 extension StocksViewController: UITableViewDataSource {

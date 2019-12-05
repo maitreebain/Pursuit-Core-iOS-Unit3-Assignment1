@@ -36,5 +36,7 @@ struct StocksData: Codable {
         return stocksData
     }
     
-}
+        
+    }
+    
 
