@@ -17,26 +17,36 @@ class StocksViewController: UIViewController {
             stocksTableView.reloadData()
         }
     }
-    
-    var sections = [[StocksData]]()
-    
-//    var sections = [[StocksData]]()
+
+    var sections = [[StocksData]](){
+        didSet {
+            stocksTableView.reloadData()
+        }
+    }
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        stocksTableView.dataSource = self
+       sections = sectionedStocks()
+        
+        stocksTableView.dataSource = self  //1
+        //2
 
         loadData()
-        sectionedStocks()
+        
     }
 
     func loadData() {
         stocks = StocksData.stocksData()
     }
 
-    func sectionedStocks() {
+    func sectionedStocks() -> [[StocksData]] {
+        
+        var stockMatrix = [[StocksData]]()
+        
         let stocksData = StocksData.stocksData()
+        
         let stocksSorted = stocksData.sorted { $0.date < $1.date }
         
         var arrayOfDates = [String]()
@@ -51,73 +61,79 @@ class StocksViewController: UIViewController {
         
         let dateName = Set(arrayOfDates.sorted())
         let nameArray = Array(dateName).sorted()
-        var sections = Array(repeating: [StocksData](), count: dateName.count)
+        stockMatrix = Array(repeating: [StocksData](), count: nameArray.count)
         
         var currentIndex = 0
         var sectionIndex = 0
         var currentSectionIndex = nameArray[sectionIndex]
         
-        let firstDate = stocksSorted[currentIndex].date
-        var cleanFirstDate = firstDate.components(separatedBy: "-")
-        cleanFirstDate.removeLast()
-        var updatedFirst = cleanFirstDate.joined(separator: " ")
-        
+        //var firstDate = stocksSorted[currentIndex].date
         
         for date in stocksSorted {
             var stockDateName = date.date.components(separatedBy: "-")
             stockDateName.removeLast()
             let updatedDate = stockDateName.joined(separator: " ")
             
-            if updatedDate == updatedFirst {
-                sections[currentIndex].append(date)
+            if updatedDate == currentSectionIndex {
+                stockMatrix[currentIndex].append(date)
             } else {
-                updatedFirst = updatedDate
+                //firstDate = updatedDate
                 currentIndex += 1
                 sectionIndex += 1
                 currentSectionIndex = nameArray[sectionIndex]
-                sections[currentIndex].append(date)
+                stockMatrix[currentIndex].append(date)
             }
         }
-
+            return stockMatrix
     }
     
     
-    func stocksAverage() -> Double {
-        let stocksData = StocksData.stocksData()
+    func stocksAverage(_ section: [StocksData]) -> Double {
         var sum = 0.0
         
-        for stock in stocksData {
+        for stock in section {
             sum += stock.uOpen
         }
-        let avg = (sum / Double(stocksData.count))
+        let avg = (sum / Double(section.count))
         
         return avg
     }
 }
 
 extension StocksViewController: UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return stocks.count
+    
+     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return sections[section].count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "stocksCell", for: indexPath)
         
-        let selectedStock = stocks[indexPath.row]
+        let selectedStock = sections[indexPath.section][indexPath.row]
         
         cell.textLabel?.text = selectedStock.date
-        cell.detailTextLabel?.text = selectedStock.uOpen.description
+        cell.detailTextLabel?.text = selectedStock.open.description
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        
+
         guard let sectionsArray = sections[section].first?.label.components(separatedBy: " ") else {
             return ""
         }
-        
-        
-        
+        let stockAverage = stocksAverage(sections[section])
+
+        let cleanNumber = String(format: "%.2f", stockAverage)
+
+        let title = "\(sectionsArray[0]) \(sectionsArray[2]) \t\t\t\t\t\t\t\t\t \(cleanNumber)"
+
+        return title
     }
+    
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return sections.count
+    }
+
 }
