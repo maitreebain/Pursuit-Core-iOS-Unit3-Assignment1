@@ -27,7 +27,7 @@ struct StocksData: Codable {
             let data = try Data.init(contentsOf: fileURL)
             
             let stocksInfo = try JSONDecoder().decode([StocksData].self, from: data)
-            stocksData = stocksInfo.sorted { $0.date < $1.date}
+            stocksData = stocksInfo
         }
         catch {
             fatalError("decoding error: \(error)")

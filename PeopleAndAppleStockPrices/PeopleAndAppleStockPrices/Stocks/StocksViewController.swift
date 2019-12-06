@@ -18,6 +18,8 @@ class StocksViewController: UIViewController {
         }
     }
     
+    var sections = [[StocksData]]()
+    
 //    var sections = [[StocksData]]()
     
     override func viewDidLoad() {
@@ -35,10 +37,11 @@ class StocksViewController: UIViewController {
 
     func sectionedStocks() {
         let stocksData = StocksData.stocksData()
-
+        let stocksSorted = stocksData.sorted { $0.date < $1.date }
+        
         var arrayOfDates = [String]()
         
-        let uniqueDates = Set(stocksData.map { $0.date})
+        let uniqueDates = Set(stocksSorted.map { $0.date})
 
         for date in uniqueDates {
             var dateInfo = date.components(separatedBy: "-")
@@ -54,23 +57,41 @@ class StocksViewController: UIViewController {
         var sectionIndex = 0
         var currentSectionIndex = nameArray[sectionIndex]
         
-        var firstDate = stocksData.first?.date
+        let firstDate = stocksSorted[currentIndex].date
+        var cleanFirstDate = firstDate.components(separatedBy: "-")
+        cleanFirstDate.removeLast()
+        var updatedFirst = cleanFirstDate.joined(separator: " ")
         
-        for date in stocksData {
+        
+        for date in stocksSorted {
             var stockDateName = date.date.components(separatedBy: "-")
             stockDateName.removeLast()
             let updatedDate = stockDateName.joined(separator: " ")
             
-            if updatedDate == firstDate {
+            if updatedDate == updatedFirst {
                 sections[currentIndex].append(date)
             } else {
+                updatedFirst = updatedDate
                 currentIndex += 1
                 sectionIndex += 1
                 currentSectionIndex = nameArray[sectionIndex]
                 sections[currentIndex].append(date)
             }
         }
+
+    }
+    
+    
+    func stocksAverage() -> Double {
+        let stocksData = StocksData.stocksData()
+        var sum = 0.0
         
+        for stock in stocksData {
+            sum += stock.uOpen
+        }
+        let avg = (sum / Double(stocksData.count))
+        
+        return avg
     }
 }
 
@@ -88,5 +109,15 @@ extension StocksViewController: UITableViewDataSource {
         cell.detailTextLabel?.text = selectedStock.uOpen.description
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        
+        guard let sectionsArray = sections[section].first?.label.components(separatedBy: " ") else {
+            return ""
+        }
+        
+        
+        
     }
 }
