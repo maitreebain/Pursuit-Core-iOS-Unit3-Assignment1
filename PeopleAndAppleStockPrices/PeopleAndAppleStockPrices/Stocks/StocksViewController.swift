@@ -40,7 +40,7 @@ class StocksViewController: UIViewController {
     func loadData() {
         stocks = StocksData.stocksData()
     }
-
+    
     func sectionedStocks() -> [[StocksData]] {
         
         var stockMatrix = [[StocksData]]()
@@ -97,6 +97,17 @@ class StocksViewController: UIViewController {
         let avg = (sum / Double(section.count))
         
         return avg
+    }
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let stocksDetailVC = segue.destination as? StocksDetailController,
+            let indexPath = stocksTableView.indexPathForSelectedRow else {
+                fatalError("no segue found")
+        }
+        let selectedStock = stocks[indexPath.row]
+        
+        stocksDetailVC.stocks = selectedStock
     }
 }
 
